@@ -4,12 +4,6 @@ DataStream endpoint definitions using new SDK (v2 API)
 Replaces the old endpointdef.py with modern DataStream v2 API
 """
 
-import os
-import sys
-
-# Add parent directory to path to import the SDK
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from datastream_sdk import DataStreamClient
 
 # Global client instance
