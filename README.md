@@ -1,6 +1,34 @@
 # Akamai CLI: DataStream 2.0 Module
 
-This module enables the use of DataStream in the Akamai CLI tool
+This module enables the use of DataStream 2.0 API in the Akamai CLI tool.
+
+**✅ DataStream v2 API Support**: Fully migrated to DataStream v2 API with Python 3.8+ compatibility.
+
+## Features
+
+- **DataStream v2 API Integration**: Native support for the latest DataStream API
+- **Python 3.8+ Compatible**: Modern Python support with enhanced performance
+- **EdgeGrid Authentication**: Secure authentication using Akamai EdgeGrid
+- **Comprehensive Command Coverage**: 15 subcommands for complete DataStream management
+- **JSON & Text Output**: Flexible output formats for automation and human reading
+
+## Testing Status
+
+**✅ Fully Tested (9/15 commands)**
+- Basic operations: `list-groups`, `list-connectors`, `list-stream-types`, `list-products`, `list-datasets`
+- Stream operations: `get-stream`, `activation-history`, `stream-history`, `deactivate`
+
+**🔄 Help Display Verified (4/15 commands)**
+- Write operations: `create`, `update`, `activate`, `delete`
+- *Note: Command syntax verified, actual operations need API specification review*
+
+**⏭️ Currently Unable to Test (2/15 commands)**
+- `list-streams`, `list-properties` - experiencing server-side issues
+
+## Requirements
+
+- Python 3.8 or higher
+- Akamai EdgeGrid credentials with DataStream API access
 
 ## API Permissions
 
@@ -34,6 +62,19 @@ $akamai datastream [global flags] Commands
 ## Commands  
 - `list-groups` —   List all Groups in the Account
 - `list-connectors` — List all Connectors Available.
+- `list-stream-types` — List all Types of Stream.
+- `list-streams` — List all Streams.
+- `list-properties` — List all Properties.
+- `list-datasets` — List all Datasets.
+- `list-products` — List all Products.
+- `get-stream` — Get Details of Stream.
+- `activation-history` — Get Details of Stream Activation History.
+- `stream-history` — Get Details of Stream History.
+- `create` — Create a Particular Stream.
+- `update` — Update a Particular Stream.
+- `activate` — Activate a Particular Stream.
+- `deactivate` — Deactivate a Particular Stream.
+- `delete` — Delete a Particular Stream.
 
 
 ## Examples
