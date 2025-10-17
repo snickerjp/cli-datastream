@@ -16,11 +16,14 @@ from datastream_sdk import DataStreamClient
 _client = None
 
 
-def get_client():
+def get_client(edgerc_path=None, section=None):
     """Get or create DataStream client instance"""
     global _client
     if _client is None:
-        _client = DataStreamClient()
+        if edgerc_path and section:
+            _client = DataStreamClient(edgerc_path=edgerc_path, section=section)
+        else:
+            _client = DataStreamClient()
     return _client
 
 

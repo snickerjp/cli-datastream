@@ -46,6 +46,13 @@ def main():
     # Initialize configuration
     config = EdgeGridConfig({"verbose": False}, "default")
     
+    # Initialize SDK client with CLI configuration
+    from endpointdef import get_client
+    if hasattr(config, 'edgerc') and hasattr(config, 'section'):
+        get_client(config.edgerc, config.section)
+    else:
+        get_client()
+    
     if config.command == "list-groups":
         # Get the list of policies in JSON format for the given network
         if hasattr(config, 'accountSwitchKey'):
