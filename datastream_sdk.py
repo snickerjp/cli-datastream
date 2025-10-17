@@ -4,14 +4,33 @@ Akamai DataStream SDK wrapper using EdgeGrid Python
 """
 
 import json
+import os
 import requests
 from akamai.edgegrid import EdgeGridAuth, EdgeRc
 from urllib.parse import urljoin
 
 
 class DataStreamClient:
-    def __init__(self, edgerc_path='~/.edgerc', section='default'):
+    def __init__(self, edgerc_path=None, section=None):
         """Initialize DataStream client with EdgeGrid authentication"""
+        # Priority: 1. Argument, 2. Environment variable, 3. Default
+        if section is None:
+            section = os.getenv('AKAMAI_EDGERC_SECTION', 'default')
+        
+        if edgerc_path is None:
+            edgerc_path = os.getenv('AKAMAI_EDGERC')
+            
+            if edgerc_path is None:
+                # Search in safe locations
+                for path in ['./.edgerc', '~/.edgerc']:
+                    expanded_path = os.path.expanduser(path)
+                    if os.path.exists(expanded_path):
+                        edgerc_path = expanded_path
+                        break
+                
+                if edgerc_path is None:
+                    raise FileNotFoundError("No .edgerc file found")
+        
         self.edgerc = EdgeRc(edgerc_path)
         self.section = section
         self.baseurl = f"https://{self.edgerc.get(section, 'host')}"
@@ -28,7 +47,8 @@ class DataStreamClient:
         
         response = self.session.get(urljoin(self.baseurl, path), params=params)
         response.raise_for_status()
-        return response.json()
+        result = response.json()
+        return result.get('groups', [])
     
     def list_streams(self, group_id, stream_status=None):
         """List all streams in a group"""
@@ -68,8 +88,3 @@ if __name__ == "__main__":
     groups = client.list_groups()
     for group in groups:
         print(f"Group: {group.get('groupId')} - {group.get('groupName')}")
-    
-    # List connectors
-    connectors = client.list_connectors()
-    for connector in connectors:
-        print(f"Connector: {connector.get('connectorType')}")
