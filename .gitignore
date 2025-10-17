@@ -125,3 +125,13 @@ credentials.json
 config.json
 test_output/
 logs/
+
+API_MIGRATION_MAPPING.md
+MIGRATION_PLAN.md
+TERRAFORM_EXPORT_RESEARCH.md
+ToDo.md
+Todo.md
+bin/endpointdef_OLD.py
+datastream-v2-openapi.json
+test_apis.py
+v2_endpoints.txt

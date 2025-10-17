@@ -171,7 +171,7 @@ class DataStreamClient:
 
         response = self.session.delete(urljoin(self.baseurl, path))
         response.raise_for_status()
-        return response.json()
+        return {} if response.status_code == 204 else response.json()
 
 
 if __name__ == "__main__":

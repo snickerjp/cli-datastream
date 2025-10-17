@@ -76,8 +76,12 @@ def listErrorStreams(groupId, accountSwitchKey=None):
 
 def getStream(streamId, accountSwitchKey=None):
     """Get details of a specific stream"""
+    from config import EdgeGridConfig
+
+    config = EdgeGridConfig({"verbose": False}, "default")
     client = get_client()
-    return client.get_stream(streamId)
+    version = getattr(config, "version", "latest")
+    return client.get_stream(streamId, version=version)
 
 
 def getStreamActHistory(streamId, accountSwitchKey=None):

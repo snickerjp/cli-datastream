@@ -27,7 +27,7 @@ This module enables the use of DataStream 2.0 API in the Akamai CLI tool.
 
 ## Requirements
 
-- Python 3.8 or higher
+- Python 3.9 or higher
 - Akamai EdgeGrid credentials with DataStream API access
 
 ## API Permissions
