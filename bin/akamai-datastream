@@ -20,8 +20,7 @@
  ************************************************************************
 
 """
-# Libraries commmon to python 2 and 3
-from __future__ import print_function
+# Libraries for Python 3.8+
 
 import json
 import logging
@@ -36,18 +35,8 @@ import requests
 import texttable as tt
 from akamai.edgegrid import EdgeGridAuth
 from config import EdgeGridConfig
-from future import standard_library
-from future.builtins import next, object
 from http_calls import EdgeGridHttpCaller
-
-standard_library.install_aliases()
-
-if sys.version_info[0] >= 3:
-     # python3
-	from urllib.parse import urljoin
-else:
-     # python2.7
-     from urlparse import urljoin
+from urllib.parse import urljoin
 
 from endpointdef import *
 from outputformat import *
