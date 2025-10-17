@@ -26,13 +26,7 @@ import sys
 import requests
 from akamai.edgegrid import EdgeGridAuth, EdgeRc
 from config import EdgeGridConfig
-
-if sys.version_info[0] >= 3:
-    # python3
-    from urllib import parse
-else:
-    # python2.7
-    import urlparse as parse
+from urllib import parse
 
 logger = logging.getLogger(__name__)
 

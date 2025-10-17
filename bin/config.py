@@ -19,17 +19,10 @@ import argparse
 import logging
 import os
 import sys
+import http.client as http_client
+from configparser import ConfigParser
 
-if sys.version_info[0] >= 3:
-    # python3
-    import http.client as http_client
-    from configparser import ConfigParser
-else:
-    # python2.7
-    import httplib as http_client
-    from ConfigParser import ConfigParser
-
-PACKAGE_VERSION = "0.1.8"
+PACKAGE_VERSION = "0.2.0"  # Updated for Python 3.8+ and SDK v2 integration
 
 logger = logging.getLogger(__name__)
 
