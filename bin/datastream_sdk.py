@@ -153,7 +153,7 @@ class DataStreamClient:
         """Activate a stream"""
         path = f"/datastream-config-api/v2/log/streams/{stream_id}/activate"
 
-        response = self.session.put(urljoin(self.baseurl, path), json={})
+        response = self.session.post(urljoin(self.baseurl, path), json={})
         response.raise_for_status()
         return response.json()
 
@@ -161,7 +161,7 @@ class DataStreamClient:
         """Deactivate a stream"""
         path = f"/datastream-config-api/v2/log/streams/{stream_id}/deactivate"
 
-        response = self.session.put(urljoin(self.baseurl, path), json={})
+        response = self.session.post(urljoin(self.baseurl, path), json={})
         response.raise_for_status()
         return response.json()
 

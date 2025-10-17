@@ -6,11 +6,3 @@ requests-toolbelt==1.0.0
 # CLI dependencies
 texttable==1.4.0
 configparser==3.5.0
-
-# Legacy CLI dependencies (commented out due to version conflicts)
-# cffi
-# idna<2.7,>=2.5
-# edgegrid-python==1.1.1  # conflicts with SDK version
-# requests==2.23.0        # conflicts with SDK version
-# prettytable==0.7.2
-# click==7.1.1
