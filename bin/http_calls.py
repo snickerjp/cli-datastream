@@ -22,11 +22,11 @@ import json
 import logging
 import os
 import sys
+from urllib import parse
 
 import requests
 from akamai.edgegrid import EdgeGridAuth, EdgeRc
 from config import EdgeGridConfig
-from urllib import parse
 
 logger = logging.getLogger(__name__)
 

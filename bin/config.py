@@ -16,10 +16,10 @@ limitations under the License.
 """
 
 import argparse
+import http.client as http_client
 import logging
 import os
 import sys
-import http.client as http_client
 from configparser import ConfigParser
 
 PACKAGE_VERSION = "0.2.0"  # Updated for Python 3.8+ and SDK v2 integration

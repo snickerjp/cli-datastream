@@ -30,15 +30,14 @@ import re
 import sys
 import urllib
 from subprocess import call
+from urllib.parse import urljoin
 
 import requests
 import texttable as tt
 from akamai.edgegrid import EdgeGridAuth
 from config import EdgeGridConfig
-from http_calls import EdgeGridHttpCaller
-from urllib.parse import urljoin
-
 from endpointdef import *
+from http_calls import EdgeGridHttpCaller
 from outputformat import *
 
 
