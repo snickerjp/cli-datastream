@@ -44,6 +44,9 @@ from outputformat import *
 
 def main():
     """ Processes the right command (list-configs, get-configs, acknowledge-cidrs) """
+    # Initialize configuration
+    config = EdgeGridConfig({"verbose": False}, "default")
+    
     if config.command == "list-groups":
         # Get the list of policies in JSON format for the given network
         if hasattr(config, 'accountSwitchKey'):
