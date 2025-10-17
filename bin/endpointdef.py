@@ -33,17 +33,15 @@ def get_client(edgerc_path=None, section=None):
 def listGroups(accountSwitchKey=None):
     """List the groups associated with the account"""
     client = get_client()
-    return {"groups": client.list_groups(accountSwitchKey)}
+    return client.list_groups(accountSwitchKey)
 
 
 def listConnectors(accountSwitchKey=None):
     """List connectors (compatibility layer - hardcoded values)"""
-    return {
-        "connectors": [
-            {"connectorTypeId": 2, "connectorTypeName": "S3"},
-            {"connectorTypeId": 7, "connectorTypeName": "Azure Storage"},
-        ]
-    }
+    return [
+        {"connectorType": 2, "connectorTypeName": "S3"},
+        {"connectorType": 7, "connectorTypeName": "Azure Storage"},
+    ]
 
 
 def listProducts(accountSwitchKey=None):
