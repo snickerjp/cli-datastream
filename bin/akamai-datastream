@@ -22,22 +22,24 @@
 """
 # Libraries commmon to python 2 and 3
 from __future__ import print_function
-import sys
-import os
+
+import json
 import logging
+import os
 import random
 import re
-import requests
-import json
+import sys
 import urllib
+from subprocess import call
+
+import requests
 import texttable as tt
-from future import standard_library
-from future.builtins import next
-from future.builtins import object
-from http_calls import EdgeGridHttpCaller
 from akamai.edgegrid import EdgeGridAuth
 from config import EdgeGridConfig
-from subprocess import call
+from future import standard_library
+from future.builtins import next, object
+from http_calls import EdgeGridHttpCaller
+
 standard_library.install_aliases()
 
 if sys.version_info[0] >= 3:
