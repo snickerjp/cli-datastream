@@ -189,7 +189,7 @@ class EdgeGridConfig:
         )
         get_stream_parser.add_argument(
             "--version",
-            "-v",
+            "-V",
             default="latest",
             metavar="<latest>/<version id>",
             help="Version id to fetch. Default will be latest version.",

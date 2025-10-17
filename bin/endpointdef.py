@@ -31,31 +31,15 @@ def listGroups(accountSwitchKey=None):
 
 
 def listConnectors(accountSwitchKey=None):
-    """List connectors (compatibility layer - hardcoded values)"""
-    return [
-        {"connectorType": 2, "connectorTypeName": "S3"},
-        {"connectorType": 7, "connectorTypeName": "Azure Storage"},
-    ]
+    """List all available connectors"""
+    client = get_client()
+    return client.list_connectors()
 
 
 def listProducts(accountSwitchKey=None):
-    """List products (compatibility layer - hardcoded values)"""
-    return {
-        "products": [
-            {
-                "productId": "Adaptive_Media_Delivery",
-                "productName": "Adaptive Media Delivery",
-                "groups": [],
-                "templates": [{"templateName": "EDGE_LOGS"}],
-            },
-            {
-                "productId": "Ion_Standard",
-                "productName": "Ion Standard",
-                "groups": [],
-                "templates": [{"templateName": "EDGE_LOGS"}],
-            },
-        ]
-    }
+    """List all available products"""
+    client = get_client()
+    return {"products": client.list_products()}
 
 
 def listStreamTypes(accountSwitchKey=None):

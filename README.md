@@ -2,12 +2,12 @@
 
 This module enables the use of DataStream 2.0 API in the Akamai CLI tool.
 
-**✅ DataStream v2 API Support**: Fully migrated to DataStream v2 API with Python 3.8+ compatibility.
+**✅ DataStream v2 API Support**: Fully migrated to DataStream v2 API with Python 3.9+ compatibility.
 
 ## Features
 
 - **DataStream v2 API Integration**: Native support for the latest DataStream API
-- **Python 3.8+ Compatible**: Modern Python support with enhanced performance
+- **Python 3.9+ Compatible**: Modern Python support with enhanced performance
 - **EdgeGrid Authentication**: Secure authentication using Akamai EdgeGrid
 - **Comprehensive Command Coverage**: 15 subcommands for complete DataStream management
 - **JSON & Text Output**: Flexible output formats for automation and human reading
