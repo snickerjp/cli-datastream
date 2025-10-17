@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 DataStream endpoint definitions using new SDK (v2 API)
 Replaces the old endpointdef.py with modern DataStream v2 API
@@ -60,13 +59,17 @@ def listStreamTypes(accountSwitchKey=None):
 def listStreams(groupId, status=None, accountSwitchKey=None):
     """List streams in a group"""
     client = get_client()
-    return client.list_streams(groupId, status)
+    return client.list_streams(groupId, status, account_switch_key=accountSwitchKey)
 
 
 def listProperties(groupId, productId, accountSwitchKey=None):
     """List properties for a group and product"""
     client = get_client()
-    return {"properties": client.list_properties(groupId, productId)}
+    return {
+        "properties": client.list_properties(
+            groupId, productId, account_switch_key=accountSwitchKey
+        )
+    }
 
 
 def listErrorStreams(groupId, accountSwitchKey=None):

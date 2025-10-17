@@ -33,10 +33,17 @@ class DataStreamClient:
 
         self.edgerc = EdgeRc(edgerc_path)
         self.section = section
-        self.baseurl = f"https://{self.edgerc.get(section, 'host')}"
+
+        # Normalize host scheme to avoid double-prefix
+        host = self.edgerc.get(section, "host")
+        self.baseurl = (
+            host if host.startswith(("http://", "https://")) else f"https://{host}"
+        )
 
         self.session = requests.Session()
         self.session.auth = EdgeGridAuth.from_edgerc(self.edgerc, section)
+        self.session.headers.update({"User-Agent": "akamai-datastream-cli/2.0"})
+        self.timeout = (5, 30)  # (connect_timeout, read_timeout) in seconds
 
     def list_groups(self, account_switch_key=None):
         """List all groups in the account"""
@@ -45,19 +52,25 @@ class DataStreamClient:
         if account_switch_key:
             params["accountSwitchKey"] = account_switch_key
 
-        response = self.session.get(urljoin(self.baseurl, path), params=params)
+        response = self.session.get(
+            urljoin(self.baseurl, path), params=params, timeout=self.timeout
+        )
         response.raise_for_status()
         result = response.json()
         return result.get("groups", [])
 
-    def list_streams(self, group_id, stream_status=None):
+    def list_streams(self, group_id, stream_status=None, account_switch_key=None):
         """List all streams in a group"""
         path = f"/datastream-config-api/v2/log/groups/{group_id}/streams"
         params = {}
         if stream_status:
             params["streamStatus"] = stream_status
+        if account_switch_key:
+            params["accountSwitchKey"] = account_switch_key
 
-        response = self.session.get(urljoin(self.baseurl, path), params=params)
+        response = self.session.get(
+            urljoin(self.baseurl, path), params=params, timeout=self.timeout
+        )
         response.raise_for_status()
         result = response.json()
         return result.get("streams", [])
@@ -73,11 +86,16 @@ class DataStreamClient:
         response.raise_for_status()
         return response.json()
 
-    def list_connectors(self):
+    def list_connectors(self, account_switch_key=None):
         """List all available connectors"""
         path = "/datastream-config-api/v2/log/connectors"
+        params = {}
+        if account_switch_key:
+            params["accountSwitchKey"] = account_switch_key
 
-        response = self.session.get(urljoin(self.baseurl, path))
+        response = self.session.get(
+            urljoin(self.baseurl, path), params=params, timeout=self.timeout
+        )
         response.raise_for_status()
         result = response.json()
         return result.get("connectors", [])
@@ -96,23 +114,33 @@ class DataStreamClient:
         result = response.json()
         return result.get("datasetFields", [])
 
-    def list_products(self):
+    def list_products(self, account_switch_key=None):
         """List all available products"""
         path = "/datastream-config-api/v2/log/products"
+        params = {}
+        if account_switch_key:
+            params["accountSwitchKey"] = account_switch_key
 
-        response = self.session.get(urljoin(self.baseurl, path))
+        response = self.session.get(
+            urljoin(self.baseurl, path), params=params, timeout=self.timeout
+        )
         response.raise_for_status()
         result = response.json()
         return result.get("products", [])
 
-    def list_properties(self, group_id, product_id):
+    def list_properties(self, group_id, product_id, account_switch_key=None):
         """List properties for a group and product"""
         path = (
             f"/datastream-config-api/v2/log/groups/{group_id}/"
             f"products/{product_id}/properties"
         )
+        params = {}
+        if account_switch_key:
+            params["accountSwitchKey"] = account_switch_key
 
-        response = self.session.get(urljoin(self.baseurl, path))
+        response = self.session.get(
+            urljoin(self.baseurl, path), params=params, timeout=self.timeout
+        )
         response.raise_for_status()
         result = response.json()
         return result.get("properties", [])
@@ -121,7 +149,7 @@ class DataStreamClient:
         """Get activation history for a stream"""
         path = f"/datastream-config-api/v2/log/streams/{stream_id}/activation-history"
 
-        response = self.session.get(urljoin(self.baseurl, path))
+        response = self.session.get(urljoin(self.baseurl, path), timeout=self.timeout)
         response.raise_for_status()
         return response.json()
 
@@ -129,7 +157,7 @@ class DataStreamClient:
         """Get stream history"""
         path = f"/datastream-config-api/v2/log/streams/{stream_id}/history"
 
-        response = self.session.get(urljoin(self.baseurl, path))
+        response = self.session.get(urljoin(self.baseurl, path), timeout=self.timeout)
         response.raise_for_status()
         return response.json()
 
@@ -137,7 +165,9 @@ class DataStreamClient:
         """Create a new stream"""
         path = "/datastream-config-api/v2/log/streams"
 
-        response = self.session.post(urljoin(self.baseurl, path), json=stream_data)
+        response = self.session.post(
+            urljoin(self.baseurl, path), timeout=self.timeout, json=stream_data
+        )
         response.raise_for_status()
         return response.json()
 
@@ -145,7 +175,9 @@ class DataStreamClient:
         """Update an existing stream"""
         path = f"/datastream-config-api/v2/log/streams/{stream_id}"
 
-        response = self.session.put(urljoin(self.baseurl, path), json=stream_data)
+        response = self.session.put(
+            urljoin(self.baseurl, path), timeout=self.timeout, json=stream_data
+        )
         response.raise_for_status()
         return response.json()
 
@@ -153,7 +185,9 @@ class DataStreamClient:
         """Activate a stream"""
         path = f"/datastream-config-api/v2/log/streams/{stream_id}/activate"
 
-        response = self.session.post(urljoin(self.baseurl, path), json={})
+        response = self.session.post(
+            urljoin(self.baseurl, path), timeout=self.timeout, json={}
+        )
         response.raise_for_status()
         return response.json()
 
@@ -161,7 +195,9 @@ class DataStreamClient:
         """Deactivate a stream"""
         path = f"/datastream-config-api/v2/log/streams/{stream_id}/deactivate"
 
-        response = self.session.post(urljoin(self.baseurl, path), json={})
+        response = self.session.post(
+            urljoin(self.baseurl, path), timeout=self.timeout, json={}
+        )
         response.raise_for_status()
         return response.json()
 
@@ -169,7 +205,9 @@ class DataStreamClient:
         """Delete a stream"""
         path = f"/datastream-config-api/v2/log/streams/{stream_id}"
 
-        response = self.session.delete(urljoin(self.baseurl, path))
+        response = self.session.delete(
+            urljoin(self.baseurl, path), timeout=self.timeout
+        )
         response.raise_for_status()
         return {} if response.status_code == 204 else response.json()
 
