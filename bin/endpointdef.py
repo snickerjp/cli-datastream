@@ -51,8 +51,15 @@ def listProducts(accountSwitchKey=None):
             {
                 "productId": "Adaptive_Media_Delivery",
                 "productName": "Adaptive Media Delivery",
+                "groups": [],
+                "templates": [{"templateName": "EDGE_LOGS"}],
             },
-            {"productId": "Ion_Standard", "productName": "Ion Standard"},
+            {
+                "productId": "Ion_Standard",
+                "productName": "Ion Standard",
+                "groups": [],
+                "templates": [{"templateName": "EDGE_LOGS"}],
+            },
         ]
     }
 
@@ -64,7 +71,9 @@ def listStreamTypes(accountSwitchKey=None):
             {
                 "streamTypeId": 3,
                 "streamTypeName": "2.0 BETA",
+                "streamType": "RAW_LOGS",
                 "streamTypeIdentifier": "RAW_LOGS",
+                "isRaw": True,
             }
         ]
     }
@@ -73,7 +82,7 @@ def listStreamTypes(accountSwitchKey=None):
 def listStreams(groupId, status=None, accountSwitchKey=None):
     """List streams in a group"""
     client = get_client()
-    return {"streams": client.list_streams(groupId, status)}
+    return client.list_streams(groupId, status)
 
 
 def listProperties(groupId, productId, accountSwitchKey=None):

@@ -83,7 +83,7 @@ def formatOutputProductList(productsList, output_type):
         Parentheader = ["Product", "Product Id", "Groups", "Templates"]
         ParentTable.header(Parentheader)
 
-        for my_item in productsList:
+        for my_item in productsList.get("products", []):
             group_ids = []
             template_list = []
             for group in my_item["groups"]:
@@ -119,7 +119,7 @@ def formatOutputStreamTypeList(streamTypeList, output_type):
         ParentTable.set_cols_valign(["m", "m", "m"])
         Parentheader = ["StreamTypeName", "StreamType", "Raw"]
         ParentTable.header(Parentheader)
-        for my_item in streamTypeList:
+        for my_item in streamTypeList.get("streamTypes", []):
             raw = "No"
             if my_item["isRaw"] == True:
                 raw = "Yes"
@@ -332,16 +332,15 @@ def formatOutputDatasetList(datasetList, output_type):
         ParentTable.set_cols_valign(["m", "m", "m", "m"])
         Parentheader = ["Group Name", "Field Id", "Field Name", "Field Description"]
         ParentTable.header(Parentheader)
-        for my_item in datasetList:
-            group_name = my_item["datasetGroupName"]
-            for ds_item in my_item["datasetFields"]:
-                Parentrow = [
-                    group_name,
-                    ds_item["datasetFieldId"],
-                    ds_item["datasetFieldName"],
-                    ds_item["datasetFieldDescription"],
-                ]
-                ParentTable.add_row(Parentrow)
+        for my_item in datasetList.get("datasetFields", []):
+            group_name = my_item["datasetFieldGroup"]
+            Parentrow = [
+                group_name,
+                my_item["datasetFieldId"],
+                my_item["datasetFieldName"],
+                my_item["datasetFieldDescription"],
+            ]
+            ParentTable.add_row(Parentrow)
         MainParentTable = ParentTable.draw()
         print(MainParentTable)
 
