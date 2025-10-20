@@ -20,39 +20,39 @@
  ************************************************************************
 
 """
-# Libraries commmon to python 2 and 3
-from __future__ import print_function
-import sys
-import os
+# Libraries for Python 3.9+
+
+import json
 import logging
+import os
 import random
 import re
-import requests
-import json
+import sys
 import urllib
+from subprocess import call
+from urllib.parse import urljoin
+
+import requests
 import texttable as tt
-from future import standard_library
-from future.builtins import next
-from future.builtins import object
-from http_calls import EdgeGridHttpCaller
 from akamai.edgegrid import EdgeGridAuth
 from config import EdgeGridConfig
-from subprocess import call
-standard_library.install_aliases()
-
-if sys.version_info[0] >= 3:
-     # python3
-	from urllib.parse import urljoin
-else:
-     # python2.7
-     from urlparse import urljoin
-
 from endpointdef import *
+from http_calls import EdgeGridHttpCaller
 from outputformat import *
 
 
 def main():
     """ Processes the right command (list-configs, get-configs, acknowledge-cidrs) """
+    # Initialize configuration
+    config = EdgeGridConfig({"verbose": False}, "default")
+    
+    # Initialize SDK client with CLI configuration
+    from endpointdef import get_client
+    if hasattr(config, 'edgerc') and hasattr(config, 'section'):
+        get_client(config.edgerc, config.section)
+    else:
+        get_client()
+    
     if config.command == "list-groups":
         # Get the list of policies in JSON format for the given network
         if hasattr(config, 'accountSwitchKey'):
