@@ -22,7 +22,7 @@ import os
 import sys
 from configparser import ConfigParser
 
-PACKAGE_VERSION = "0.2.0"  # Updated for Python 3.8+ and SDK v2 integration
+PACKAGE_VERSION = "0.2.0"  # Updated for Python 3.9+ and SDK v2 integration
 
 logger = logging.getLogger(__name__)
 

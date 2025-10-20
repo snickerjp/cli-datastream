@@ -20,7 +20,7 @@
  ************************************************************************
 
 """
-# Libraries for Python 3.8+
+# Libraries for Python 3.9+
 
 import json
 import logging
